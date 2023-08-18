@@ -29,7 +29,7 @@ module RubySMB
               raise OpenSSL::Cipher::CipherError  # raised for consistency with GCM mode
             end
           when 'AES-128-GCM', 'AES-256-GCM'
-            cipher = OpenSSL::Cipher.new(algorithm).decrypt
+            cipher = OpenSSL::Cipher.new(algorithm.downcase).decrypt
             cipher.key = key
             cipher.iv = self.nonce[0...12]
             cipher.auth_data = auth_data
@@ -61,7 +61,7 @@ module RubySMB
             encrypted_data = result[0...-16]
             auth_tag = result[-16..-1]
           when 'AES-128-GCM', 'AES-256-GCM'
-            cipher = OpenSSL::Cipher.new(algorithm).encrypt
+            cipher = OpenSSL::Cipher.new(algorithm.downcase).encrypt
             cipher.iv_len = 12
             cipher.key = key
             self.nonce.assign(cipher.random_iv)

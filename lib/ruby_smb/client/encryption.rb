@@ -6,7 +6,7 @@ module RubySMB
         unless @client_encryption_key
           raise RubySMB::Error::EncryptionError.new('The encryption algorithm has not been set') if @encryption_algorithm.nil?
 
-          key_bit_len = OpenSSL::Cipher.new(@encryption_algorithm).key_len * 8
+          key_bit_len = OpenSSL::Cipher.new(@encryption_algorithm.downcase).key_len * 8
 
           case @dialect
           when '0x0300', '0x0302'
